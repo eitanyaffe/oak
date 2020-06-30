@@ -2,14 +2,14 @@
 
 if [ $# -le 0 ]
 then
-    echo "Usage: $0 <OAK password> [-d <days>]"
+    echo "Usage: $0 <OAK password> [-i <interval>]"
     echo "Calls kinit in fixed intervals, using a user-specified password"
     echo "Options:"
-    echo "  -i <string>: Interval between calls (default: 23h)"
+    echo "  -i <interval>: Interval between calls (default: 23h)"
     exit 1
 fi
 
-INTER=1
+INTER=23h
 PWD=$1
 shift
 
