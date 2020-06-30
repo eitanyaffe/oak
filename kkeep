@@ -5,18 +5,18 @@ then
     echo "Usage: $0 <OAK password> [-d <days>]"
     echo "Calls kinit in fixed intervals, using a user-specified password"
     echo "Options:"
-    echo "  -d <days>: Interval between calls in days (default: 1)"
+    echo "  -i <string>: Interval between calls (default: 23h)"
     exit 1
 fi
 
-DAYS=1
+INTER=1
 PWD=$1
 shift
 
-while getopts "d" OPT
+while getopts "i" OPT
 do
   case $OPT in
-    d) DAYS=$OPTARG
+    i) INTER=$OPTARG
       ;;
   esac
 done
@@ -24,5 +24,5 @@ done
 while true
 do
 	echo $PWD | kinit $USER
-	sleep ${DAYS}d
+	sleep ${INTER}
 done
