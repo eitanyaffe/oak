@@ -2,16 +2,16 @@
 
 if [ $# -le 0 ]
 then
-    echo "Usage: $0 <OAK password> [-i <interval>]"
+    echo "Usage: $0 -i <interval>"
     echo "Calls kinit in fixed intervals, using a user-specified password"
     echo "Options:"
-    echo "  -i <interval>: Interval between calls (default: 23h)"
+    echo "  -i <interval>: Interval between calls"
     exit 1
 fi
 
-INTER=23h
-PWD=$1
-shift
+echo -n "SUNet ID password: "
+read -s PWD
+echo
 
 while getopts "i:" OPT
 do
@@ -23,6 +23,13 @@ done
 
 while true
 do
-	echo $PWD | kinit $USER
-	sleep ${INTER}
+    echo $PWD | kinit $USER
+    if [ $? -eq 0 ]
+    then
+	echo "Oak kerberos ticket obtained successfully, sleeping for ${INTER} ..." 
+    else
+	echo "SUNet ID password does not match, exiting" 
+	exit 1
+    fi
+    sleep ${INTER}
 done
