@@ -13,7 +13,7 @@ INTER=23h
 PWD=$1
 shift
 
-while getopts "i" OPT
+while getopts "i:" OPT
 do
   case $OPT in
     i) INTER=$OPTARG
