@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ $# -le 0 ]
+then
+    echo "Usage: $0 <OAK password> [-d <days>]"
+    echo "Calls kinit in fixed intervals, using a user-specified password"
+    echo "Options:"
+    echo "  -d <days>: Interval between calls in days (default: 1)"
+    exit 1
+fi
+
+DAYS=1
+PWD=$1
+shift
+
+while getopts "d" OPT
+do
+  case $OPT in
+    d) DAYS=$OPTARG
+      ;;
+  esac
+done
+
+while true
+do
+	echo $PWD | kinit $USER
+	sleep ${DAYS}d
+done
